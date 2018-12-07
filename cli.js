@@ -56,9 +56,9 @@ rimraf(generatedDir, () => {
 
     // Copy over each react file
     fs.readdirSync(REACT_DIR).forEach(file => {
-        let content = fs.readFileSync(path.join(REACT_DIR, file), 'utf-8');
+        let content = fs.readFileSync(path.join(REACT_DIR, file));
         if (path.parse(file).ext.toLowerCase() === '.js') {
-            content = content.replace(INJECT_LINE, JSON.stringify(pages));
+            content = content.toString().replace(INJECT_LINE, JSON.stringify(pages));
         }
         fs.writeFileSync(path.join(generatedDir, file), content);
     });
