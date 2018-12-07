@@ -12,7 +12,7 @@ class Sidebar extends React.Component {
             selected: 0,
             objMap
         };
-        this.onSelect(0);
+        this.onSelect(0, false);
     }
 
     buildIDs(arr, curID, map) {
@@ -25,8 +25,9 @@ class Sidebar extends React.Component {
         return curID;
     }
 
-    onSelect(id) {
-        this.setState({selected: id});
+    onSelect(id, updateState = true) {
+        if (updateState)
+            this.setState({selected: id});
         this.props.onSelect(this.state.objMap[id]);
     }
 

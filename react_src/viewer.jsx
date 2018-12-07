@@ -11,7 +11,7 @@ class Viewer extends React.Component {
             return (
                 <div>
                     <h1>{obj.name}</h1>
-                    {obj.sec.map(o => <div>{o.name}</div>)}
+                    {obj.sec.map(o => <div key={o.name}>{o.name}</div>)}
                 </div>
             );
         }
