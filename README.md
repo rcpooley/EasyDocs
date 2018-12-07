@@ -1,12 +1,15 @@
 # EasyDocs
 Easily create nested documentation
 
-## Quick start
-Copy `contentGen/sample_content` to `contentGen/content`
-
-Then to generate the documentation HTML files:
+## Installation
 ```bash
-$ npm install
-$ npm run build
+$ npm install -g ezdocs
 ```
-The minified HTMl and JavaScript files will be in the `dist` directory
+
+## Usage
+Check out [sample_content](sample_content) for an example of the content directory structure.
+
+To generate the HTML documentation files:
+```bash
+$ ezdocs sample_content out_directory
+```
