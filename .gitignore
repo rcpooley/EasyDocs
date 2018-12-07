@@ -1,3 +1,4 @@
 /.idea/
 /node_modules/
-/react_src/content/
+/react_dist/
+/.cache/

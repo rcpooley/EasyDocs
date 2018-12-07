@@ -2,12 +2,29 @@
 
 const fs = require('fs');
 const path = require('path');
-const generate = require('./generate');
-const Bundler = require('parcel-bundler');
+const rimraf = require('rimraf');
+const markdown = require('markdown').markdown;
 
-const REACT_DIR = path.join(__dirname, 'react_src');
-const REACT_CONTENT_DIR = path.join(REACT_DIR, 'content');
-const REACT_ENTRY_POINT = path.join(REACT_DIR, 'index.html');
+const REACT_DIR = path.join(__dirname, 'react_dist');
+const INJECT_LINE = '{injectPagesHere:"injectPagesHere"}';
+
+function buildHTML(srcDir) {
+    const index = JSON.parse(fs.readFileSync(path.join(srcDir, 'index.json'), 'utf-8'));
+    return index.map(obj => {
+        const subSrc = path.join(srcDir, obj.src);
+        const subStat = fs.lstatSync(subSrc);
+
+        const outObj = {name: obj.name};
+
+        if (subStat.isDirectory()) {
+            outObj.sec = buildHTML(subSrc);
+        } else {
+            outObj.comp = markdown.toHTML(fs.readFileSync(subSrc, 'utf-8'));
+        }
+
+        return outObj;
+    });
+}
 
 // Make sure we have the correct arguments
 const args = process.argv.slice(2);
@@ -33,18 +50,16 @@ if (!contentDirStat.isDirectory()) {
     process.exit(0);
 }
 
-generate(contentDir, REACT_CONTENT_DIR, () => {
-    const bundler = new Bundler(REACT_ENTRY_POINT, {
-        outDir: generatedDir,
-        outFile: 'index.html',
-        publicUrl: './',
-        watch: false,
-        cache: false,
-        minify: true,
-        target: 'browser',
-        sourceMaps: false
+rimraf(generatedDir, () => {
+    const pages = buildHTML(contentDir);
+    fs.mkdirSync(generatedDir);
+
+    // Copy over each react file
+    fs.readdirSync(REACT_DIR).forEach(file => {
+        let content = fs.readFileSync(path.join(REACT_DIR, file), 'utf-8');
+        if (path.parse(file).ext.toLowerCase() === '.js') {
+            content = content.replace(INJECT_LINE, JSON.stringify(pages));
+        }
+        fs.writeFileSync(path.join(generatedDir, file), content);
     });
-    bundler.bundle()
-        .then(() => console.log(`Wrote to ${generatedDir}`))
-        .catch((err) => console.error(err));
 });

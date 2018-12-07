@@ -6,7 +6,7 @@ class Viewer extends React.Component {
         if (obj === null) {
             return <div>Loading...</div>;
         } else if (obj.comp) {
-            return React.createElement(this.props.obj.comp, {});
+            return <div dangerouslySetInnerHTML={{__html: obj.comp}} />
         } else {
             return (
                 <div>

@@ -4,6 +4,6 @@ import Main from './main';
 
 import './css/main.css';
 
-import Pages from './content/index';
+const PAGES = {injectPagesHere: 'injectPagesHere'};
 
-ReactDOM.render(<Main pages={Pages} />, document.getElementById('root'));
+ReactDOM.render(<Main pages={PAGES} />, document.getElementById('root'));

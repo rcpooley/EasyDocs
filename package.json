@@ -4,7 +4,9 @@
   "description": "Easily generate nested documentation using markdown",
   "bin": "cli.js",
   "scripts": {
-    "start": "node cli.js"
+    "start": "node cli.js",
+    "build": "node buildReactTemplate.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "documentation",
@@ -14,12 +16,14 @@
   "author": "rcpooley",
   "license": "ISC",
   "dependencies": {
+    "markdown": "^0.5.0",
+    "rimraf": "^2.6.2"
+  },
+  "devDependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "markdown": "^0.5.0",
     "parcel-bundler": "^1.10.3",
-    "postcss-nested": "^4.1.0",
-    "rimraf": "^2.6.2"
+    "postcss-nested": "^4.1.0"
   },
   "postcss": {
     "modules": false,
