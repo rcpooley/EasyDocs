@@ -1,6 +1,3 @@
 /.idea/
-/.cache/
-/dist/
 /node_modules/
-/contentGen/content/
-/contentGen/generated/
+/react_src/content/

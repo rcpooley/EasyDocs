@@ -3,9 +3,6 @@ const path = require('path');
 const markdown = require('markdown').markdown;
 const rimraf = require('rimraf');
 
-const CONTENT_DIR = path.join(__dirname, 'content');
-const GEN_DIR = path.join(__dirname, 'generated');
-
 function generateComponents(src, dst) {
     const stat = fs.lstatSync(src);
     if (stat.isDirectory()) {
@@ -33,6 +30,9 @@ function generateComponents(src, dst) {
     }
 }
 
-rimraf(GEN_DIR, () => {
-    generateComponents(CONTENT_DIR, GEN_DIR);
-});
+module.exports = function (contentDir, genDir, cb) {
+    rimraf(genDir, () => {
+        generateComponents(contentDir, genDir);
+        if (cb) cb();
+    });
+};

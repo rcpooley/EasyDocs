@@ -1,14 +1,17 @@
 {
-  "name": "EasyDocs",
+  "name": "ezdocs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Easily generate nested documentation using markdown",
+  "bin": "cli.js",
   "scripts": {
-    "start": "parcel public/index.html",
-    "build": "rimraf dist && node contentGen/generate.js &&  parcel build public/index.html --public-url ./"
+    "start": "node cli.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "documentation",
+    "easy",
+    "easydocs"
+  ],
+  "author": "rcpooley",
   "license": "ISC",
   "dependencies": {
     "react": "^16.6.3",
